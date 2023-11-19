@@ -1,2 +1,2 @@
-# --study-materials
+# OCaml-materials
 OCaml notes & exercise solutions.
