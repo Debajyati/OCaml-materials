@@ -31,7 +31,7 @@ let psum_cube_odd i j =
   |> fold_left (+) 0
 ;;
 
-(*Problem 5*)
+(* Problem 5 - exists *)
 (*5.1*)
 let rec exists_rec p li =
   match li with
