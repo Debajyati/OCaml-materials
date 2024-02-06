@@ -213,8 +213,25 @@ module Fraction : Fraction = struct
 end
 ;;
 
-(* Problem 10 *)
+(* Problem 10 - use char map *)
 module CharMap = Map.Make(Char);;
-let charmap = CharMap.(Empty |> add 'Alpha' 'A' |> add 'Echo' 'E'|> add  'Sierra' 'S' |> 'Victor':'V');;
-charmap.find = 'E';;
-vharmap.mem 'A';;
+let charmap = CharMap.(empty |> add 'A' "Alpha" |> add 'E' "Echo" |> add 'S' "Sierra" |> add 'V' "Victor");;
+let e_binding = Charmap.find 'E';;
+let charmap = Charmap.mem 'A' charmap;;
+let assoc_list = Charmap.bindings charmap;;
+
+(* Problem 12 - date order *)
+type date = {month:int; day:int};;
+module Date : Map.OrderedType with type t = date = struct
+  type t = date
+  (* Comparison function for dates *)
+
+  let compare date1 date2 =
+    if date1.month < date2.month then -1
+    else if date1.month > date2.month then 1
+    else if date1.day < date2.day then -1
+    else if date1.day > date2.day then 1
+    else 0
+
+end
+;;
