@@ -216,9 +216,22 @@ end
 (* Problem 10 - use char map *)
 module CharMap = Map.Make(Char);;
 let charmap = CharMap.(empty |> add 'A' "Alpha" |> add 'E' "Echo" |> add 'S' "Sierra" |> add 'V' "Victor");;
-let e_binding = Charmap.find 'E';;
-let charmap = Charmap.mem 'A' charmap;;
-let assoc_list = Charmap.bindings charmap;;
+(* val charmap : string CharMap.t = <abstr> *)
+let e_binding = CharMap.find 'E' charmap;;
+(* val e_binding : string = "Echo" *)
+print_endline e_binding;;
+(* - : unit = () *)
+let charmap_without_a = CharMap.remove 'A' charmap;;
+(* val charmap_without_a : string CharMap.t = <abstr> *)
+let a_still_bound = CharMap.mem 'A' charmap_without_a;;
+(* val a_still_bound : bool = false *)
+print_endline (if a_still_bound then "A is still bound" else "A is not bound anymore");;
+(* - : unit = () *)
+let assoc_list = CharMap.bindings charmap;;
+(* val assoc_list : (char * string) list =
+  [('A', "Alpha"); ('E', "Echo"); ('S', "Sierra"); ('V', "Victor")] *)
+List.iter (fun (key, value) -> Printf.printf "%c -> %s\n" key value) assoc_list;;
+(* - : unit = () *)
 
 (* Problem 12 - date order *)
 type date = {month:int; day:int};;
@@ -235,3 +248,21 @@ module Date : Map.OrderedType with type t = date = struct
 
 end
 ;;
+
+(* Problem 13 - calendar *)
+module DateMap = Map.Make(Date);;
+type calendar = string DateMap.t;;
+let new_Calendar:calendar = 
+  let open DateMap in
+    empty 
+    |> add ({month=12;day=25}:date) "My Birthday"
+    |> add ({month=8;day=15}:date) "Independence Day"
+;;
+(* Problem 14 - printing calendar *)
+let print_calendar (cal : calendar) : unit =
+  DateMap.iter (fun date event ->
+    Printf.printf "%d/%d: %s\n" date.month date.day event
+  ) cal
+;;
+
+
