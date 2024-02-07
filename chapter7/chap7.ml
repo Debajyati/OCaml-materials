@@ -245,7 +245,6 @@ module Date : Map.OrderedType with type t = date = struct
     else if date1.day < date2.day then -1
     else if date1.day > date2.day then 1
     else 0
-
 end
 ;;
 
